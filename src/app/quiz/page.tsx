@@ -80,14 +80,12 @@ function QuizScreen({ questions, onFinish }: { questions: Question[]; onFinish: 
   const [selected, setSelected] = useState<string[]>([])
   const [revealed, setRevealed] = useState(false)
   const [correctCount, setCorrectCount] = useState(0)
+  const [lastCorrect, setLastCorrect] = useState(false)
 
   const q = questions[index]
   const total = questions.length
   const progress = ((index) / total) * 100
-
   const correct = revealed ? lastCorrect : null
-
-  const [lastCorrect, setLastCorrect] = useState(false)
 
   function handleSingle(ans: string) {
     if (revealed) return
