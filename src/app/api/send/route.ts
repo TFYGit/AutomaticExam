@@ -126,11 +126,23 @@ export async function GET(request: NextRequest) {
 
   const baseUrl = process.env.APP_URL!
 
+  const quizUrl = `${baseUrl}/quiz`
+  const emailHtml = `
+    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:480px;margin:0 auto;padding:40px 24px;text-align:center;">
+      <div style="font-size:48px;margin-bottom:16px;">📚</div>
+      <h2 style="color:#1a1a2e;font-size:22px;margin-bottom:8px;">今日考试提醒</h2>
+      <p style="color:#666;margin-bottom:32px;">题库随机抽取 100 题，点击下方按钮开始答题</p>
+      <a href="${quizUrl}" style="display:inline-block;padding:16px 48px;background:#4a90d9;color:white;border-radius:12px;text-decoration:none;font-size:17px;font-weight:600;">
+        开始答题
+      </a>
+      <p style="color:#bbb;font-size:12px;margin-top:32px;">${new Date().toLocaleDateString('zh-CN')}</p>
+    </div>`
+
   await resend.emails.send({
     from: process.env.FROM_EMAIL!,
     to: process.env.TO_EMAIL!,
-    subject: `📝 今日考题 — ${new Date().toLocaleDateString('zh-CN')}`,
-    html: buildEmailHtml(question, baseUrl),
+    subject: `📝 今日考试 — ${new Date().toLocaleDateString('zh-CN')}`,
+    html: emailHtml,
   })
 
   return NextResponse.json({ ok: true, questionId: question.id })
