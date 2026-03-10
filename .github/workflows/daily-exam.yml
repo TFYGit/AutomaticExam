@@ -1,0 +1,16 @@
+name: Daily Exam
+
+on:
+  schedule:
+    - cron: '0 1 * * *'  # UTC 01:00 = 北京时间 09:00，每天早上发题
+  workflow_dispatch:       # 允许手动点击触发，用于测试
+
+jobs:
+  send-question:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 发送今日考题
+        run: |
+          curl -f -s -X GET "${{ secrets.APP_URL }}/api/send" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -w "\nHTTP Status: %{http_code}\n"
