@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 import { createHmac } from 'crypto'
 import questionsData from '@/data/questions.json'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const transporter = nodemailer.createTransport({
+  host: 'smtp-relay.brevo.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.SMTP_USER!,
+    pass: process.env.SMTP_PASS!,
+  },
+})
 
 interface ChoiceQuestion {
   id: number
@@ -138,9 +146,11 @@ export async function GET(request: NextRequest) {
       <p style="color:#bbb;font-size:12px;margin-top:32px;">${new Date().toLocaleDateString('zh-CN')}</p>
     </div>`
 
-  await resend.emails.send({
+  const recipients = process.env.TO_EMAIL!.split(',').map(e => e.trim())
+
+  await transporter.sendMail({
     from: process.env.FROM_EMAIL!,
-    to: process.env.TO_EMAIL!,
+    to: recipients,
     subject: `📝 今日考试 — ${new Date().toLocaleDateString('zh-CN')}`,
     html: emailHtml,
   })
