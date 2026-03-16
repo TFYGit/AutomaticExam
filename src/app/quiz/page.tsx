@@ -35,7 +35,7 @@ function checkCorrect(q: Question, userAnswer: string[]): boolean {
 
 const s = {
   body: { fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif", background: '#f0f2f5', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' } as React.CSSProperties,
-  card: { background: 'white', borderRadius: 20, padding: '40px 32px', maxWidth: 600, width: '100%', boxShadow: '0 8px 32px rgba(0,0,0,0.08)' } as React.CSSProperties,
+  card: { background: 'white', borderRadius: 20, padding: '40px 32px', maxWidth: 700, width: '100%', boxShadow: '0 8px 32px rgba(0,0,0,0.08)' } as React.CSSProperties,
 }
 
 // ── 开始页 ──────────────────────────────────────────────
@@ -142,7 +142,8 @@ function QuizScreen({ questions, onFinish }: { questions: Question[]; onFinish: 
       display: 'block', width: '100%', textAlign: 'left', margin: '8px 0',
       padding: '14px 18px', background: bg, border, borderRadius: 10,
       color, fontSize: 15, cursor: revealed ? 'default' : 'pointer',
-      transition: 'all 0.15s',
+      transition: 'all 0.15s', wordBreak: 'break-all', whiteSpace: 'pre-wrap',
+      lineHeight: 1.6,
     }
   }
 
@@ -163,7 +164,7 @@ function QuizScreen({ questions, onFinish }: { questions: Question[]; onFinish: 
         </div>
 
         {/* 题目 */}
-        <h2 style={{ fontSize: 17, lineHeight: 1.7, color: '#1a1a2e', marginBottom: 20, fontWeight: 600 }}>
+        <h2 style={{ fontSize: 17, lineHeight: 1.7, color: '#1a1a2e', marginBottom: 20, fontWeight: 600, whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
           {q.question}
         </h2>
 
@@ -213,7 +214,7 @@ function QuizScreen({ questions, onFinish }: { questions: Question[]; onFinish: 
             <div style={{ fontWeight: 700, color: correct ? '#2e7d32' : '#c62828', marginBottom: q.explanation ? 8 : 0 }}>
               {correct ? '✓ 回答正确！' : `✗ 回答错误，正确答案：${correctAnswer}`}
             </div>
-            {q.explanation && <div style={{ color: '#555', fontSize: 14, lineHeight: 1.6 }}>{q.explanation}</div>}
+            {q.explanation && <div style={{ color: '#555', fontSize: 14, lineHeight: 1.6, wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>{q.explanation}</div>}
           </div>
         )}
 
