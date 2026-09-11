@@ -11,7 +11,7 @@ import openpyxl
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-EXCEL_PATH = r'C:\Users\GG\Desktop\题库-2026年3月更新版(1).xlsx'
+EXCEL_PATH = r'C:\Users\GG\Desktop\题库-2026年9月更新版.xlsx'
 OUTPUT_PATH = r'D:\pycharm\exam-system\src\data\questions.json'
 
 VALID_TYPES = {'单选题', '多选题', '判断题', '判断图'}
